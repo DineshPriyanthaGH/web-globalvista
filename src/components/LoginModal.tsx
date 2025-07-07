@@ -1,4 +1,3 @@
-
 import React, { useState } from 'react';
 import { motion } from 'framer-motion';
 import { X, Mail, Lock, Loader2 } from 'lucide-react';
@@ -12,9 +11,18 @@ interface LoginModalProps {
   isOpen: boolean;
   onClose: () => void;
   onSwitchToSignup: () => void;
+  // Add these props to support parent-driven login and error display
+  onLogin?: (email: string, password: string) => Promise<void>;
+  loginError?: string | null;
 }
 
-const LoginModal: React.FC<LoginModalProps> = ({ isOpen, onClose, onSwitchToSignup }) => {
+const LoginModal: React.FC<LoginModalProps> = ({
+  isOpen,
+  onClose,
+  onSwitchToSignup,
+  onLogin,
+  loginError
+}) => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [loading, setLoading] = useState(false);
@@ -23,7 +31,7 @@ const LoginModal: React.FC<LoginModalProps> = ({ isOpen, onClose, onSwitchToSign
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    
+
     if (!email || !password) {
       toast({
         title: "Error",
@@ -35,12 +43,16 @@ const LoginModal: React.FC<LoginModalProps> = ({ isOpen, onClose, onSwitchToSign
 
     setLoading(true);
     try {
-      await login(email, password);
-      toast({
-        title: "Success",
-        description: "Welcome back to GlobeVista!"
-      });
-      onClose();
+      if (onLogin) {
+        await onLogin(email, password);
+      } else {
+        await login(email, password);
+        toast({
+          title: "Success",
+          description: "Welcome back to GlobeVista!"
+        });
+        onClose();
+      }
     } catch (error: any) {
       toast({
         title: "Login Failed",
@@ -75,6 +87,12 @@ const LoginModal: React.FC<LoginModalProps> = ({ isOpen, onClose, onSwitchToSign
           <h2 className="text-2xl font-bold mb-2">Welcome Back</h2>
           <p className="text-gray-600">Sign in to continue your exploration</p>
         </div>
+
+        {loginError && (
+          <div className="mb-4 text-sm text-red-600 text-center">
+            {loginError}
+          </div>
+        )}
 
         <form onSubmit={handleSubmit} className="space-y-4">
           <div>
