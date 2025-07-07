@@ -23,8 +23,7 @@ const Navbar = () => {
     { path: '/favorites', label: 'Favorites', icon: Heart },
     { path: '/profile', label: 'Profile', icon: User },
   ];
-
-  return (
+  const [showSignup, setShowSignup] = React.useState(false); return (
     <motion.nav
       initial={{ y: -100 }}
       animate={{ y: 0 }}
@@ -89,11 +88,13 @@ const Navbar = () => {
             </div>
           ) : (
             <div className="flex items-center space-x-2">
-              <Button variant="ghost" size="sm">
+              <Button variant="ghost" size="sm" onClick={() => setShowSignup(true)}>
                 <User className="w-4 h-4 mr-2" />
                 Login
               </Button>
-              <Button size="sm" className="bg-gradient-to-r from-indigo-500 to-cyan-500 hover:from-indigo-600 hover:to-cyan-600">
+              <Button 
+               onClick={() => setShowSignup(true)}
+              size="sm" className="bg-gradient-to-r from-indigo-500 to-cyan-500 hover:from-indigo-600 hover:to-cyan-600">
                 Sign Up
               </Button>
             </div>
