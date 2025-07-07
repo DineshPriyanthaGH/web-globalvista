@@ -66,7 +66,13 @@ const Landing = () => {
             transition={{ delay: 0.2, type: "spring", stiffness: 200 }}
             className="w-20 h-20 bg-gradient-to-r from-indigo-500 to-cyan-500 rounded-2xl flex items-center justify-center mx-auto mb-8"
           >
-            <Globe className="w-10 h-10 text-white" />
+            <motion.div
+                         animate={{ rotate: 360 }}
+                         transition={{ duration: 8, repeat: Infinity, ease: "linear" }}
+                         className="w-8 h-8 bg-gradient-to-r from-indigo-500 to-cyan-500 rounded-lg flex items-center justify-center"
+                       >
+                         <Globe className="w-10 h-5 text-white" />
+                       </motion.div>
           </motion.div>
           
           <motion.h1
