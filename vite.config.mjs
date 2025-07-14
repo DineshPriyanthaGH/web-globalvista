@@ -1,6 +1,7 @@
 /** @type {import('vite').UserConfig} */
-export default {
-
-  plugins: [],
-  
-}
+import { defineConfig } from 'vite'
+import react from '@vitejs/plugin-react'
+export default defineConfig({
+    plugins: [react()],
+    base: '/web-globalvista/',
+});
