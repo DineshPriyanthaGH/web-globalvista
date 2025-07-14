@@ -1,0 +1,6 @@
+/** @type {import('vite').UserConfig} */
+export default {
+  // ...existing code...
+  plugins: [],
+  // ...existing code...
+}
