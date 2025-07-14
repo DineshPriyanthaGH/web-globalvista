@@ -1,10 +1,11 @@
-// vite.config.js
-import { defineConfig } from 'vite';
-// other imports...
+import { fileURLToPath, URL } from 'url';
 
-export default defineConfig({
-  // other configurations...
-  plugins: [
-    // Ensure no favicon plugin or html favicon injection
-  ],
-});
+/** @type {import('vite').UserConfig} */
+export default {
+  resolve: {
+    alias: {
+      '@': fileURLToPath(new URL('./src', import.meta.url)),
+    },
+  },
+  plugins: [],
+}
